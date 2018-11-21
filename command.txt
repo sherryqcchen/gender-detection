@@ -1,2 +1,5 @@
-python repo/tensorflow/examples/image_retraining/retrain.py --bottleneck_dir=tf_files/bottlenecks/ --how_many_training_steps 20000 --model_dir=tf_files/inception/ --output_graph=tf_files/retrain_graph.pb --output_labels=tf_files/retrain_labels.txt  --image_dir=../data/trainset
+for N in {1..4}; do python src/align/align_dataset_mtcnn.py ../data/trainset/  ../data/aligned/all --image_size 150 --margin 32 --random_order --gpu_memory_fraction 0.8 & done
+
+python src/facenet_train_classifier.py --logs_base_dir ../logs/ --models_base_dir ../models/ --data_dir ../data/aligned/may-2-size-150-margin-40/ --image_size 150 --model_def models.inception_resnet_v1 --optimizer RMSPROP --learning_rate -1 --max_nrof_epochs 50 --keep_probability 0.8 --random_crop --random_flip --learning_rate_schedule_file ./learning-rate-schedule.txt --weight_decay 5e-5 --center_loss_factor 1e-4 --center_loss_alfa 0.9
+
 
